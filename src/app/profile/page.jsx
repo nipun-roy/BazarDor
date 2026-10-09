@@ -85,12 +85,10 @@ export default function ProfilePage() {
       <div className="bg-[#fafcfa] rounded-2xl p-5 sm:p-6 border border-[#e5ebe5] flex items-center justify-between shadow-2xs">
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 shrink-0 relative flex items-center justify-center">
-            <Image
-              src="/rezwan.png"
-              alt="প্রোফাইল ছবি"
-              fill
-              className="object-cover"
-              priority
+            <img
+              src={user?.image || "/rezwan.png"}
+              alt={user?.name || "প্রোফাইল ছবি"}
+              className="w-full h-full object-cover"
             />
           </div>
           <div>
