@@ -37,7 +37,7 @@ export default function Navbar() {
             <h1 className="text-xl font-bold text-gray-900 group-hover:text-[#05893e] transition leading-tight">
               বাজার দর
             </h1>
-            <p className="text-xs text-gray-500">{banglaDate}</p>
+            <p className="text-xs text-gray-500" suppressHydrationWarning>{banglaDate}</p>
           </div>
         </Link>
 

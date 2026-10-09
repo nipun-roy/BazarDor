@@ -17,7 +17,8 @@ export function getBengaliDate() {
     'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'
   ];
   
-  const now = new Date();
+  // বাংলাদেশ সময় (UTC+6) অনুযায়ী সার্ভার ও ক্লায়েন্টে একই তারিখ নিশ্চিত করা
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" }));
   const dayName = days[now.getDay()];
   const dateBn = toBengaliNumber(now.getDate());
   const monthName = months[now.getMonth()];

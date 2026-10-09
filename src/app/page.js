@@ -31,7 +31,10 @@ export default async function HomePage() {
         {/* হিরো ব্যানার */}
         <section className="bg-[#fafcfa] rounded-3xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-8 border border-[#e5ebe5] shadow-sm">
           <div className="max-w-xl space-y-4">
-            <span className="inline-block bg-[#e6f4ea] text-[#05893e] text-xs font-semibold px-3.5 py-1 rounded-full border border-[#c6e7ce]">
+            <span
+              suppressHydrationWarning
+              className="inline-block bg-[#e6f4ea] text-[#05893e] text-xs font-semibold px-3.5 py-1 rounded-full border border-[#c6e7ce]"
+            >
               {getBengaliDate()}
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
