@@ -2,16 +2,16 @@ import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/bazardor";
+const uri = process.env.MONGODB_URI || "mongodb+srv://bazardor:ItM4gBA5ZJ8xAUwg@cluster0.dbhaiit.mongodb.net/bazardor?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 const db = client.db("bazardor");
 
 export const auth = betterAuth({
   database: mongodbAdapter(db),
-  secret: process.env.BETTER_AUTH_SECRET,
-  baseURL: process.env.BETTER_AUTH_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined),
+  secret: process.env.BETTER_AUTH_SECRET || "bazardor_assignment_secret_key_1234567890_secure_hash",
+  baseURL: process.env.BETTER_AUTH_URL || "https://bazar-dor-bay.vercel.app",
   rateLimit: {
-    enabled: false, // টেস্টিং ও মূল্যায়নের সুবিধার্থে রেট লিমিট শিথিল করা হলো
+    enabled: false,
   },
   trustedOrigins: [
     "http://localhost:3000",
@@ -22,7 +22,7 @@ export const auth = betterAuth({
     },
   ],
   advanced: {
-    disableOriginCheck: true, // Vercel প্রিভিউ ডোমেন এবং লোকালহোস্টে 403 ফর্বিডেন প্রতিরোধ করবে
+    disableOriginCheck: true,
   },
   emailAndPassword: {
     enabled: true,
