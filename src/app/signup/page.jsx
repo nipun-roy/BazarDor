@@ -48,10 +48,13 @@ export default function SignUpPage() {
 
   const handleSocialLogin = async (provider) => {
     try {
-      await authClient.signIn.social({
+      const res = await authClient.signIn.social({
         provider: provider.toLowerCase(),
         callbackURL: '/',
       });
+      if (res?.data?.url) {
+        window.location.href = res.data.url;
+      }
     } catch {
       toast.error(`${provider} দিয়ে লগইন সম্ভব হচ্ছে না`);
     }
