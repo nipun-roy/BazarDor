@@ -1,3 +1,5 @@
+import fallbackProducts from './products-data.json';
+
 // ইংরেজি সংখ্যাকে বাংলা সংখ্যায় রূপান্তর
 export function toBengaliNumber(num) {
   if (num === null || num === undefined) return '';
@@ -28,52 +30,81 @@ export function getBengaliDate() {
 export const BASE_API_URL = 'https://api.api-store.workers.dev/api/bazardor';
 export const ALT_API_URL = 'https://api.abcz.workers.dev/api/bazardor';
 
-// সব পণ্য ফেচ করার ফাংশন (ফলব্যাক সহ)
+// সব পণ্য ফেচ করার ফাংশন (API ফেইল বা রেট লিমিট 429 হলে লোকাল ডাটা ব্যবহার করবে)
 export async function fetchProducts(category = null) {
   try {
     const url = category 
       ? `${BASE_API_URL}/products?category=${category}` 
       : `${BASE_API_URL}/products`;
     const res = await fetch(url, { next: { revalidate: 60 } });
-    if (!res.ok) throw new Error('API failed');
-    return await res.json();
-  } catch {
-    // ফলব্যাক ট্রাই
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+    }
+  } catch {}
+
+  try {
     const altUrl = category 
       ? `${ALT_API_URL}/products?category=${category}` 
       : `${ALT_API_URL}/products`;
     const res = await fetch(altUrl, { next: { revalidate: 60 } });
-    return await res.json();
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+    }
+  } catch {}
+
+  // যদি দুটো এপিআই থেকেই এরর বা 429 রেট লিমিট আসে, তাহলে লোকাল ডাটা রিটার্ন করব
+  if (category) {
+    return fallbackProducts.filter((p) => p.category === category);
   }
+  return fallbackProducts;
 }
 
 // ক্যাটাগরি ফেচ করার ফাংশন
 export async function fetchCategories() {
   try {
     const res = await fetch(`${BASE_API_URL}/categories`, { next: { revalidate: 3600 } });
-    if (!res.ok) throw new Error('API failed');
-    return await res.json();
-  } catch {
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+    }
+  } catch {}
+
+  try {
     const res = await fetch(`${ALT_API_URL}/categories`, { next: { revalidate: 3600 } });
-    return await res.json();
-  }
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+    }
+  } catch {}
+
+  return [
+    { slug: 'chal', nameBn: 'চাল', icon: '🍚' },
+    { slug: 'dal', nameBn: 'ডাল', icon: '🫘' },
+    { slug: 'tel', nameBn: 'তেল', icon: '🫙' },
+    { slug: 'sobji', nameBn: 'সবজি', icon: '🥬' },
+    { slug: 'mach', nameBn: 'মাছ', icon: '🐟' },
+    { slug: 'mangsho', nameBn: 'মাংস', icon: '🍗' },
+    { slug: 'dim-dui', nameBn: 'ডিম-দুধ', icon: '🥛' },
+    { slug: 'mosla', nameBn: 'মসলা', icon: '🌶️' },
+  ];
 }
 
 // একক পণ্য ফেচ করার ফাংশন (id বা slug অনুযায়ী)
 export async function fetchProductByIdOrSlug(slugOrId) {
-  // যদি সরাসরি সংখ্যা আইডি হয়
-  if (!isNaN(slugOrId)) {
-    const res = await fetch(`${BASE_API_URL}/products/${slugOrId}`, { cache: 'no-store' });
-    if (res.ok) return await res.json();
-  }
+  try {
+    if (!isNaN(slugOrId)) {
+      const res = await fetch(`${BASE_API_URL}/products/${slugOrId}`, { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.nameBn) return data;
+      }
+    }
+  } catch {}
 
-  // যদি slug নাম হয়, সব প্রোডাক্ট থেকে খুঁজে বের করি
+  // স্লাগ অথবা ফলব্যাক থেকে খুঁজে বের করা
   const all = await fetchProducts();
   const found = all.find((p) => p.slug === slugOrId || p.id.toString() === slugOrId.toString());
-  if (found) {
-    const res = await fetch(`${BASE_API_URL}/products/${found.id}`, { cache: 'no-store' });
-    if (res.ok) return await res.json();
-    return found;
-  }
-  return null;
+  return found || null;
 }

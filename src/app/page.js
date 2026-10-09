@@ -7,7 +7,8 @@ import { fetchProducts, toBengaliNumber, getBengaliDate } from "@/lib/utils";
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const products = await fetchProducts();
+  const rawProducts = await fetchProducts();
+  const products = Array.isArray(rawProducts) ? rawProducts : [];
 
   // আজ দাম বেড়েছে (Top 6 Risers)
   const risers = [...products]

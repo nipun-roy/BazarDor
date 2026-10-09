@@ -5,7 +5,7 @@ A modern and responsive web application built to monitor real-time daily commodi
 ---
 
 ## 🔗 Project Links
-- **Live Website:** [https://bazardor.vercel.app](https://bazardor.vercel.app)
+- **Live Website:** [https://bazar-dor-bay.vercel.app](https://bazar-dor-bay.vercel.app)
 - **GitHub Repository:** [https://github.com/nipun-roy/BazarDor](https://github.com/nipun-roy/BazarDor)
 
 ---
