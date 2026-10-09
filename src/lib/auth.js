@@ -24,6 +24,12 @@ export const auth = betterAuth({
   advanced: {
     disableOriginCheck: true,
   },
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "github"],
+    },
+  },
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: false,
