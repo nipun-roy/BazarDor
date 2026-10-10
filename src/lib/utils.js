@@ -27,9 +27,9 @@ export function getBengaliDate() {
   return `${dayName}, ${dateBn} ${monthName}, ${yearBn}`;
 }
 
-// API বেস ইউআরএল
-export const BASE_API_URL = 'https://api.api-store.workers.dev/api/bazardor';
-export const ALT_API_URL = 'https://api.abcz.workers.dev/api/bazardor';
+// API বেস ইউআরএল (প্রোগ্রামিং হিরোর নতুন অফিশিয়াল এপিআই)
+export const BASE_API_URL = 'https://openapi.programming-hero.com/api/bazardor';
+export const ALT_API_URL = 'https://api.api-store.workers.dev/api/bazardor';
 
 // সব পণ্য ফেচ করার ফাংশন (API ফেইল বা রেট লিমিট 429 হলে লোকাল ডাটা ব্যবহার করবে)
 export async function fetchProducts(category = null) {
