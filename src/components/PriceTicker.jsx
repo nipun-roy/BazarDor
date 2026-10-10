@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { toBengaliNumber } from '@/lib/utils';
+import { toBengaliNumber, getProductEmoji } from '@/lib/utils';
 
 export default function PriceTicker({ products = [] }) {
   if (!products || products.length === 0) return null;
@@ -16,7 +16,7 @@ export default function PriceTicker({ products = [] }) {
 
           return (
             <div key={`${item.id}-${idx}`} className="inline-flex items-center gap-2 text-gray-700">
-              <span>{item.image}</span>
+              <span>{getProductEmoji(item)}</span>
               <span className="font-semibold text-gray-800">{item.nameBn}</span>
               <span>{toBengaliNumber(item.today)} টাকা/{item.unit === 'kg' ? 'কেজি' : item.unit}</span>
               <span

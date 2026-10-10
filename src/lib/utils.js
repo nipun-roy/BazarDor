@@ -27,6 +27,16 @@ export function getBengaliDate() {
   return `${dayName}, ${dateBn} ${monthName}, ${yearBn}`;
 }
 
+// পণ্যের ইমোজি/আইকন সার্বজনীনভাবে প্রদর্শনের জন্য হেল্পার
+export function getProductEmoji(product) {
+  if (!product) return '🛒';
+  // ঢেঁড়সের ক্ষেত্রে API-তে 🟢 (সবুজ বৃত্ত) দেওয়া আছে, যা সবজির মতো দেখায় না
+  if (product.slug === 'dherosh' || product.nameBn === 'ঢেঁড়স' || product.image === '🟢') {
+    return '🥒';
+  }
+  return product.image || '🛒';
+}
+
 // API বেস ইউআরএল (প্রোগ্রামিং হিরোর নতুন অফিশিয়াল এপিআই)
 export const BASE_API_URL = 'https://openapi.programming-hero.com/api/bazardor';
 export const ALT_API_URL = 'https://api.api-store.workers.dev/api/bazardor';

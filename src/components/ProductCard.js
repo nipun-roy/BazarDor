@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { toBengaliNumber } from '@/lib/utils';
+import { toBengaliNumber, getProductEmoji } from '@/lib/utils';
 
 export default function ProductCard({ product }) {
   const isUp = product.change?.dir === 'up';
@@ -16,8 +16,8 @@ export default function ProductCard({ product }) {
     >
       {/* টপ: ইমোজি বক্স + নাম ও একক */}
       <div className="flex items-start gap-3.5">
-        <div className="w-12 h-12 rounded-xl bg-[#f0f5f0] flex items-center justify-center text-2xl group-hover:scale-105 transition shrink-0">
-          {product.image || '🛒'}
+        <div className="w-12 h-12 rounded-xl bg-[#f0f5f0] flex items-center justify-center text-2xl group-hover:scale-105 transition shrink-0 select-none">
+          {getProductEmoji(product)}
         </div>
         <div>
           <h3 className="font-bold text-gray-900 group-hover:text-[#05893e] transition text-sm sm:text-base leading-snug">

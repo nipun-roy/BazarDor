@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { fetchProductByIdOrSlug, toBengaliNumber } from '@/lib/utils';
+import { fetchProductByIdOrSlug, toBengaliNumber, getProductEmoji } from '@/lib/utils';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 import { ArrowLeft, Store } from 'lucide-react';
@@ -63,8 +63,8 @@ export default function ProductDetailPage() {
 
       {/* টপ সামারি */}
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-6">
-        <div className="w-24 h-24 rounded-2xl bg-emerald-50 flex items-center justify-center text-5xl">
-          {product.image || '🛒'}
+        <div className="w-24 h-24 rounded-2xl bg-emerald-50 flex items-center justify-center text-5xl select-none">
+          {getProductEmoji(product)}
         </div>
         <div className="space-y-2 text-center sm:text-left flex-1">
           <div className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
